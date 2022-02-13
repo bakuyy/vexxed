@@ -14,6 +14,7 @@ high_score = 0
 # pygame variables
 WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
+RED = (255, 0, 0)
 BLUEGREEN = (0,255,170)
 FPS = 240
 HEIGHT = 600
@@ -145,7 +146,7 @@ class Image:
 
 # main function
 def main():
-    global FPS, WINDOW, FONT, BLACK, start, score, high_score, game_over, red, direction, play_again_button, start_button, exit_button, timer
+    global FPS, WINDOW, FONT, BLACK, RED, start, score, high_score, game_over, red, direction, play_again_button, start_button, exit_button, timer
     running = True
     while running:
         # clock = pygame.time.Clock()
@@ -250,16 +251,18 @@ def main():
             instructions2 = description.render(
                 'using your cursor to navigate through the maze without touching the walls. Do not die :)', False,
                 WHITE)
+            instructions3 = description.render('NO ONE HAS EVER GONE PAST 1000', False, RED)
             WINDOW.blit(instructions, (70, 80))
             WINDOW.blit(instructions2, (20, 100))
+            WINDOW.blit(instructions3,(180, 130))
 
             # load button images
             start_img = pygame.image.load('startbutton.png').convert_alpha()
             exit_img = pygame.image.load('exit.png').convert_alpha()
 
             # start button
-            start_button = Image(120, 150, start_img, 0.8)
-            exit_button = Image(150, 300, exit_img, 0.8)
+            start_button = Image(120, 150, start_img, 0.475)
+            exit_button = Image(120, 325, exit_img, 1)
             start_button.draw()
             exit_button.draw()
             pygame.display.update()
