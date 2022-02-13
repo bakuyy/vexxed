@@ -1,6 +1,7 @@
 import pygame
 import random
 import time
+from pygame import mixer
 
 # initialize pygame
 pygame.init()
@@ -30,6 +31,10 @@ direction = "U"
 pygame.display.set_caption("Vexation")
 timer = 3
 
+#music
+mixer.init()
+mixer.music.load('chase.mp3')
+mixer.music.play()
 
 class Blocks:
     # list of all blocks [[x, y, w, h]]
