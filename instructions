@@ -1,0 +1,84 @@
+import pygame
+
+pygame.font.init()
+(width,height) = (600,600)
+screen = pygame.display.set_mode(600, 600)
+
+#visuals
+BLUEGREEN = (0,255,170)
+WHITE = (255,255,255)
+BLACK = (0,0,0)
+Title = pygame.font.SysFont('Ariel',50)
+description = pygame.font.SysFont('Ariel',20)
+
+#changes background colour
+screen.fill(BLACK)
+
+textsurface = Title.render('Instructions', False, WHITE)
+screen.blit(textsurface,(200,20))
+
+instructions = description.render('Like suffering? Good. The goal is to survive for as long as possible, ', False, WHITE)
+instructions2 = description.render('using your cursor to navigate through the maze without touching the walls. Do not die :)', False, WHITE)
+screen.blit(instructions,(70,80))
+screen.blit(instructions2,(20,100))
+
+#load button images
+start_img = pygame.image.load('startbutton.png').convert_alpha()
+exit_img = pygame.image.load('exit.png').convert_alpha()
+
+#button class
+
+
+class Button():
+    def __init__(self, x, y, image, scale):
+        width = image.get_width()
+        height = image.get_height()
+        self.image = pygame.transform.scale(image, (int(width * scale), int(height * scale)))
+        self.rect = self.image.get_rect()
+        self.rect.topleft = (x, y)
+        self.clicked = False
+
+    def draw(self, surface):
+        action = False
+        # get mouse position
+        pos = pygame.mouse.get_pos()
+
+        # check mouseover and clicked conditions
+        if self.rect.collidepoint(pos):
+            if pygame.mouse.get_pressed()[0] == 1 and self.clicked == False:
+                self.clicked = True
+                action = True
+
+        if pygame.mouse.get_pressed()[0] == 0:
+            self.clicked = False
+
+        # draw button on screen
+        surface.blit(self.image, (self.rect.x, self.rect.y))
+
+        return action
+
+#start button
+start_button = Button(120, 150, start_img, 0.8)
+exit_button = Button(150, 300, exit_img, 0.8)
+
+#displays screen
+pygame.display.update()
+
+#make button work
+run = True
+
+while run:
+    pos = pygame.mouse.get_pos()
+
+    if start_button.draw(screen):
+        print('START')
+    if exit_button.draw(screen):
+        pygame.quit()
+
+    #check if mouse is
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            run = False
+
+    pygame.display.update()
+pygame.quit()
